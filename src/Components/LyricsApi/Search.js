@@ -13,6 +13,9 @@ const Search = () => {
 
     const onSearch = () => {
         const apiKey = 'e6fa00dce5aa8dcca85691817a667544';
+        const link = `https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?q_artist=${artist.replaceAll(' ', '&nbsp;')}&q_track=${song.replaceAll(' ', '&nbsp;')}`;
+
+        console.log(link)
         const config = {
             headers: {
                 'Content-Type': 'application/json'
@@ -22,7 +25,7 @@ const Search = () => {
                 password: apiKey
             }
         }
-        axios.get(`https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?q_artist=${artist}&q_track=${song}`, config)
+        axios.get(`https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?q_artist=${artist.replaceAll(' ', '&nbsp;')}&q_track=${song.replaceAll(' ', '&nbsp;')}`, config)
             .then(res => { console.log(res) }
             )
             .catch(err => console.log(err));
