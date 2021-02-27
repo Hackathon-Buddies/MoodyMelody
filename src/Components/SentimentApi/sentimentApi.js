@@ -31,15 +31,15 @@ function SentimentApi() {
             console.log(err);
         }
     }
-    // const dummyData = () => {
-    //     setEmotions({
-    //         sadness: 0.06,
-    //         joy: 0.008,
-    //         fear: '0.1',
-    //         disgust: '0.49',
-    //         anger: '0.62'
-    //     })
-    // }
+    const dummyData = () => {
+        setEmotions({
+            sadness: 0.06,
+            joy: 0.008,
+            fear: '0.1',
+            disgust: '0.49',
+            anger: '0.62'
+        })
+    }
 
     // const mapEmotionToColor = emotion => {
     //     switch(emotion){
@@ -63,7 +63,7 @@ function SentimentApi() {
             <div className="md-form amber-textarea active-amber-textarea">
                 <h3>
                     <span className="m-4">Text to analyse</span>
-                    <button className="btn btn-success" onClick={getEmotion}>Get Emotion</button>
+                    <button className="btn btn-success" onClick={dummyData}>Get Emotion</button>
                 </h3>
                 <textarea id="emotional-text" 
                     className="md-textarea form-control" 
