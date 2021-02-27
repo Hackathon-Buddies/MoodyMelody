@@ -1,24 +1,25 @@
 import './App.css';
-import Spotify from './Components/SpotifyApi/spotifyApi';
-import React, { useState } from 'react';
-import SentimentApi from './Components/SentimentApi/sentimentApi';
+import React from 'react';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+import Navbar from './Components/NavBar/Navbar';
+import LyricsAPI from './Components/LyricsApi/lyricsApi'
 
 function App() {
   let topSongs = []
   const topSongsHandler = songList => topSongs = songList;
   return (
-    <div className="App">
-      <h1>Welcome to Moody Melody</h1>
-
-      <div> {/* Spotify API */}
-        <Spotify getTopSongs={topSongsHandler} />
-        <button onClick={() => console.log(topSongs)}>get top songs</button>
-      </div>
-
-      <div> {/* SentimentApi API */}
-        <SentimentApi />
-      </div>
-    </div>
+      <Router>
+        <React.Fragment>
+          <Navbar />
+          <div className="container">
+            <Switch>
+              <Route exact path="/" component={LyricsAPI}>
+              </Route>
+            </Switch>
+          </div>
+        </React.Fragment>
+      </Router>
   );
 }
 
