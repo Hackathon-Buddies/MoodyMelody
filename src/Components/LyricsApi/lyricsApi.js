@@ -1,15 +1,13 @@
-// https://developer.musixmatch.com/documentation/api-reference/track-search
+import React from "react";
+import Search from './Search';
+import Output from './Output';
 
-import React, { Component } from 'react';
-
-class lyricsApi extends Component {
-    render() {
-        return (
-            <div>
-                <h1>Hello</h1>
-            </div>
-        );
-    }
-}
-
-export default lyricsApi;
+const lyricsApi = () => {
+    return (
+      <React.Fragment>
+        <Search />
+        <Output />
+      </React.Fragment>
+    );
+  };
+  export default lyricsApi;
