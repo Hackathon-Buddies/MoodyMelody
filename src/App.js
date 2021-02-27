@@ -6,6 +6,8 @@ import Navbar from './Components/NavBar/Navbar';
 import LyricsAPI from './Components/LyricsApi/lyricsApi'
 
 function App() {
+  let topSongs = []
+  const topSongsHandler = songList => topSongs = songList;
   return (
       <Router>
         <React.Fragment>
