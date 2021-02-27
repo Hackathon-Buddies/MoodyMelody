@@ -4,7 +4,7 @@ class Output extends Component {
     render() {
         return (
             <div>
-                hi
+                Output of search
             </div>
         );
     }
