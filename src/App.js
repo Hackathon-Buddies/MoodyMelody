@@ -4,12 +4,9 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Navbar from './Components/NavBar/Navbar';
 import LyricsAPI from './Components/LyricsApi/lyricsApi'
-import { Provider } from './Components/LyricsApi/context'
 
 function App() {
   return (
-
-    <Provider>
       <Router>
         <React.Fragment>
           <Navbar />
@@ -21,9 +18,6 @@ function App() {
           </div>
         </React.Fragment>
       </Router>
-    </Provider>
-
-
   );
 }
 

@@ -9,31 +9,20 @@ import axios from "axios";
 const Search = () => {
     const [artist, setArtist] = useState('');
     const [song, setSong] = useState('');
-
+    const [lyrics, setLyrics] = useState('');
 
     const onSearch = () => {
-        const apiKey = 'e6fa00dce5aa8dcca85691817a667544';
-        const link = `https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?q_artist=${artist.replaceAll(' ', '&nbsp;')}&q_track=${song.replaceAll(' ', '&nbsp;')}`;
-
-        console.log(link)
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            auth: {
-                username: 'apikey',
-                password: apiKey
-            }
-        }
-        axios.get(`https://cors-anywhere.herokuapp.com/http://api.musixmatch.com/ws/1.1/track.search?q_artist=${artist.replaceAll(' ', '&nbsp;')}&q_track=${song.replaceAll(' ', '&nbsp;')}`, config)
-            .then(res => { console.log(res) }
-            )
-            .catch(err => console.log(err));
-
+        const lyricsNotFound = setTimeout(() => {
+            const songText = song === '' ? '- No song was given' : 'for ' + song;
+            const artistText = artist === '' ? '- No artist was given' : 'by ' + artist;
+            setLyrics(`Lyrics not found ${songText} ${artistText}`);
+        },5000)
+        const link = `https://api.lyrics.ovh/v1/${artist}/${song}`
+        axios.get(link).then(res => {
+            clearTimeout(lyricsNotFound);
+            setLyrics(res.data.lyrics);
+        });
     }
-
-
-
     return (
         <div className="card card-body mb-4 p-4">
             <h1 className="display-4 text-center">
@@ -66,8 +55,8 @@ const Search = () => {
 
             <button className="btn btn-primary btn-lg btn-block mb-5" onClick={onSearch}>
                 Get Track Lyrics
-                </button>
-
+            </button>
+            <textarea disabled value={lyrics} cols="30" rows="10"></textarea>
         </div>
     );
 }

@@ -1,12 +1,10 @@
 import React from "react";
-// import Search from './Search';
-import Output from './Output';
+import Search from './Search';
 
 const lyricsApi = () => {
     return (
       <React.Fragment>
-        {/* <Search /> */}
-        <Output />
+        <Search />
       </React.Fragment>
     );
   };
