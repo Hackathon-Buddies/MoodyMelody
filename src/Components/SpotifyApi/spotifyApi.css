@@ -1,0 +1,17 @@
+.logout {
+    background-color:  #1DB954;
+    color: aliceblue;
+    text-align: center;
+    width: 90px;
+    border-radius: 10px;
+    font-weight: bold;
+    padding: 10px 10px;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.outerWrapper{
+    text-align: center;
+}
