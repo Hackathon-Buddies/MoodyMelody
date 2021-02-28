@@ -49,8 +49,8 @@ function App() {
         <div className="container">
           <Switch>
             <Route exact path="/lyrics">{<LyricsAPI />}</Route>
-            <Route exact path="/recommendation"><TastediveApi /></Route>
-            <React exact path="sentiment"><SentimentApi /></React>
+            <Route exact path="/sentiment">{<SentimentApi />}</Route>
+            <Route exact path="/recommendation">{<TastediveApi />}</Route>
           </Switch>
           <button onClick={() => console.log(topSongs)}>get top songs</button>
         </div>
