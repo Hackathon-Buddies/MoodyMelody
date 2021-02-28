@@ -9,7 +9,6 @@ import './spotifyApi.css'
 
 
 function Spotify({ getTopSongs }) {
-
     const [songList, setSongList] = useState([]);
     const [spotifyAuthToken, setSpotifyAuthToken] = useState();
     const token = Cookies.get('spotifyAuthToken')
@@ -25,9 +24,22 @@ function Spotify({ getTopSongs }) {
 
     return (
         <div className="outerWrapper">
-
- 
-
+            <SpotifyApiContext.Provider value={token}>
+                <UserTop type='tracks'>
+                    {(tracks, loading, error) =>
+                        tracks && tracks.data
+                            ? (getTopSongs(Array.from(tracks.data.items.map((tr) => ({ title: tr.name, artist: tr.artists[0].name })))),
+                                tracks.data.items.map((track) => {
+                                    return (
+                                        <>
+                                            {/* <p> song: {track.name} artist: {track.artists[0].name} </p> */}
+                                        </>
+                                    )
+                                }))
+                            : <p></p>
+                    }
+                </UserTop>
+            </SpotifyApiContext.Provider>
             {token ?
                 <div className='logout topRight' onClick={() => logout()}> Logout </div> :
                 <div className='spotifyBtn topRight' >
