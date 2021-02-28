@@ -18,11 +18,12 @@ function App() {
         <React.Fragment>
           <Navbar />
           <div className="container">
+          <SentimentApi />
             <Switch>
               <Route exact path="/lyrics">{<LyricsAPI />}</Route>
               <Route exact path="/recommendation"><TastediveApi /></Route>
               <Route exact path="/"><Spotify getTopSongs={topSongsHandler} /></Route>
-              <React exact path="sentiment"><SentimentApi /></React>
+              {/* <React exact path="/sentiment">{<SentimentApi />}</React> */}
             </Switch>
 
             <button onClick={() => console.log(topSongs)}>get top songs</button>
