@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import Navbar from './Components/NavBar/Navbar';
 import LyricsAPI from './Components/LyricsApi/lyricsApi'
+import Home from './Components/Home/Home';
 
 function App() {
   let topSongs = [];
@@ -48,11 +49,11 @@ function App() {
         <Spotify getTopSongs={topSongsHandler} />
         <div className="container">
           <Switch>
+          <Route exact path="/">{<Home />}</Route>
             <Route exact path="/lyrics">{<LyricsAPI />}</Route>
             <Route exact path="/sentiments">{<SentimentApi />}</Route>
             <Route exact path="/recommendations">{<TastediveApi />}</Route>
           </Switch>
-          <button onClick={() => console.log(topSongs)}>get top songs</button>
         </div>
       </React.Fragment>
     </Router>
