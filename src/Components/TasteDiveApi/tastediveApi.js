@@ -38,7 +38,7 @@ function TastediveApi() {
 
       <button onClick={() => fetchAuthorization()}> true </button>
       <div>
-        <ul>{recommendationList}</ul>
+        <ul className="reco">{recommendationList}</ul>
       </div>
 
     </div>
