@@ -1,5 +1,7 @@
 # Moody Melody - 24hr Hackathon project #
 
+* 1st place at HackSurrey 2021 -> https://devpost.com/software/moodymelody
+
 * Have you ever wondered what your favourite tracks say about you ? Or, rather, how they make you feel?
 * Now you can get a pretty good idea with Moody Melody ! Simply connect your spotify and everything will be automatically analysed and displayed in a colourful menu.
 
