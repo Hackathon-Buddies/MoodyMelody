@@ -37,6 +37,19 @@ ul li::before {
       border-radius: 360px;
     }
 
+    .recommendMe{
+      margin: 5px;
+      background-color: #eeff33;
+      width: 390px;
+      font-size: 1.2rem;
+      border-radius: 25px;
+      text-align: center;
+      font-weight: bold;
+      padding: 10px;
+      cursor: pointer;
+
+    }
+
  
   @-webkit-keyframes AnimationName {
       0%{background-position:0% 50%}

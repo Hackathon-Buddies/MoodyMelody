@@ -2,7 +2,8 @@ import './App.css';
 import TastediveApi from './Components/TasteDiveApi/tastediveApi.js';
 import Spotify from './Components/SpotifyApi/spotifyApi';
 import SentimentApi from './Components/SentimentApi/sentimentApi';
-import React, {useState} from 'react';
+import XMLHttpRequest from 'xmlhttprequest';
+import React, { useState } from 'react';
 import axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -12,6 +13,7 @@ import Home from './Components/Home/Home';
 
 function App() {
   const [showingEmotions, setShowingEmotions] = useState(false);
+  const [songs, setSongs] = useState([]);
   const [sadness, setsadness] = useState(0)
   const [joy, setjoy] = useState(0)
   const [fear, setfear] = useState(0)
@@ -66,7 +68,7 @@ function App() {
         combined += text.data.lyrics;
       }
     })
-    if (combined !== ''){
+    if (combined !== '') {
       getEmotion(combined);
     }
   }
@@ -95,13 +97,14 @@ function App() {
         localStorage.setItem('topSongs', JSON.stringify(topSentiments));
         console.log("finihied being emotional");
         setShowingEmotions(true);
-        console.log("is it showing it tho ? ",showingEmotions);
-        console.log('current sentiments ',topSentiments);
+        console.log("is it showing it tho ? ", showingEmotions);
+        console.log('current sentiments ', topSentiments);
         setjoy(topSentiments.joy);
         setanger(topSentiments.anger);
         setdisgust(topSentiments.disgust);
         setfear(topSentiments.fear);
         setsadness(topSentiments.sadness);
+        setSongs(topSongs);
       });
     } catch (err) {
       console.log(err);
@@ -111,21 +114,29 @@ function App() {
   }
 
   const mapEmotionToColor = emotion => {
-    switch(emotion){
-        case 'sadness': return '#5c9bff';
-        case 'joy': return '#d7d964'
-        case 'fear': return '#a675bf';
-        case 'disgust': return '#7dad82'
-        case 'anger': return '#c76a65';
-        default: return 'white';
+    switch (emotion) {
+      case 'sadness': return '#5c9bff';
+      case 'joy': return '#d7d964'
+      case 'fear': return '#a675bf';
+      case 'disgust': return '#7dad82'
+      case 'anger': return '#c76a65';
+      default: return 'white';
     }
-}
+  }
+
+
+
+
 
   const displayEmotions = showingEmotions ? (console.log('showing emotion chart'), Object.keys(topSentiments).map(emotion => {
-      const colour = mapEmotionToColor(emotion);
-      console.log('dealt with colour -> ',colour);
-      return <div key={emotion} className="sentimentBlocks" style={{'background-color': colour}}><div className="innerBlocks">{emotion} <br/> {topSentiments[emotion]*100+"%"}</div></div>
-  })) : (console.log('Failed at having any emotions on the chart'),null)
+    const colour = mapEmotionToColor(emotion);
+    console.log('dealt with colour -> ', colour);
+    return <div key={emotion} className="sentimentBlocks" style={{ 'background-color': colour }}><div className="innerBlocks">{emotion} <br /> {(topSentiments[emotion] * 100).toFixed(3) + "%"}</div></div>
+  })) : (console.log('Failed at having any emotions on the chart'), null)
+
+  const displayTopSongs = songs.map(song => {
+    return <span className="songSpan"> {song.title} - {song.artist}, </span>
+  });
 
   return (
     <Router>
@@ -134,12 +145,18 @@ function App() {
         <Spotify getTopSongs={topSongsHandler} />
         <div className="container">
           <Switch>
-            <Route exact path="/">{<Home />}</Route>
+            <Route exact path="/">{
+              <>
+              <Home />
+              {displayEmotions}
+              <div style={{marginTop: "50px"}}> <h2>Sentiments based on the following songs from your library:</h2> {displayTopSongs}</div>
+              </>
+            }</Route>
             <Route exact path="/lyrics">{<LyricsAPI />}</Route>
             <Route exact path="/sentiments">{<SentimentApi />}</Route>
             <Route exact path="/recommendations">{<TastediveApi />}</Route>
           </Switch>
-          {displayEmotions}
+          
         </div>
       </React.Fragment>
     </Router>
