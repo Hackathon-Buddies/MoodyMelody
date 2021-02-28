@@ -1,11 +1,10 @@
 // https://tastedive.com/read/api
+import './tastdive.css';
 import { useState } from 'react';
 import XMLHttpRequest from 'xmlhttprequest';
 
 
 function TastediveApi() {
-
-  const [isLoading, setBool] = useState(false);
 
   var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
@@ -13,7 +12,6 @@ function TastediveApi() {
 
   let tasteDate1 = ['2', '3', '4'];
   const [recommendations, setRecommendations] = useState([]);
-
 
   const fetchAuthorization = () => {
 
@@ -32,11 +30,11 @@ function TastediveApi() {
     }
     xhr.send();
   }
-  const recommendationList = recommendations.map(rec => <li>{rec}</li>);
 
+  const recommendationList = recommendations.map(rec => <li> <img src="https://i.gifer.com/YdBO.gif" alt="-" className="playGif" /> {rec}</li> );
+  
   return (
     <div>
-
 
       <button onClick={() => fetchAuthorization()}> true </button>
       <div>
