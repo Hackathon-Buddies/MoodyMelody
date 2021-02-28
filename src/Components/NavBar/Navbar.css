@@ -1,0 +1,15 @@
+.navbar-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 30px;
+    color: white;
+    text-decoration: white;
+    text-transform: uppercase;
+    outline: none;
+  }
+
+  .navbar {
+    display: flex;
+    flex-direction: row;
+  }
