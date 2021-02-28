@@ -31,7 +31,7 @@ function TastediveApi() {
     xhr.send();
   }
 
-  const recommendationList = recommendations.map(rec => <li> <img src="https://i.gifer.com/YdBO.gif" alt="-" className="playGif" /> {rec}</li> );
+  const recommendationList = recommendations.map(rec => <li> <img src="https://www.wmhbradio.org/wp-content/uploads/2016/07/music-placeholder.png" alt="-" className="playGif" /> {rec}</li> );
   
   return (
     <div>
