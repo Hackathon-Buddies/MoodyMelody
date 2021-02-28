@@ -2,7 +2,7 @@ import './App.css';
 import TastediveApi from './Components/TasteDiveApi/tastediveApi.js';
 import Spotify from './Components/SpotifyApi/spotifyApi';
 import SentimentApi from './Components/SentimentApi/sentimentApi';
-import React from 'react';
+import React, {useState} from 'react';
 import axios from "axios";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -11,14 +11,26 @@ import LyricsAPI from './Components/LyricsApi/lyricsApi'
 import Home from './Components/Home/Home';
 
 function App() {
+  const [showingEmotions, setShowingEmotions] = useState(false);
+  const [sadness, setsadness] = useState(0)
+  const [joy, setjoy] = useState(0)
+  const [fear, setfear] = useState(0)
+  const [disgust, setdisgust] = useState(0)
+  const [anger, setanger] = useState(0)
   let topSongs = [];
   let topLyrics = [];
-  let topSentiments = [];
+  let topSentiments = {
+    sadness: sadness,
+    joy: joy,
+    fear: fear,
+    disgust: disgust,
+    anger: anger
+  };
   const topSongsHandler = songList => {
     topSongs = songList;
     localStorage.setItem('topSongs', JSON.stringify(songList));
     topLyrics = [];
-    if (Array.isArray(songList) && songList.length > 0){
+    if (Array.isArray(songList) && songList.length > 0) {
       searchList();
     }
   }
@@ -42,23 +54,21 @@ function App() {
         i++;
         searchList();
       } else {
-       getEmotionsFromArray(topLyrics);
+        getEmotionsFromArray(topLyrics);
       }
     })
   };
 
-  const getEmotionsFromArray = async arr => {
-    const results = arr.map(async text => {
-      if (text && typeof text.data.lyrics === 'string'){
-        return await getEmotion(text.data.lyrics);
-      } else {
-        return null;
+  const getEmotionsFromArray = arr => {
+    let combined = '';
+    arr.map(text => {
+      if (text && typeof text.data.lyrics === 'string') {
+        combined += text.data.lyrics;
       }
-    });
-    await Promise.all(results).then(res => {
-      topSentiments = res;
-      localStorage.setItem('topLyrics', JSON.stringify(topSentiments));
-    });
+    })
+    if (combined !== ''){
+      getEmotion(combined);
+    }
   }
 
   const getEmotion = sentimentalText => {
@@ -81,13 +91,41 @@ function App() {
     }
     try {
       axios.post(serviceUrl, data, config).then(res => {
-        return res ? res.data.emotion.document.emotion : null;
+        topSentiments = res ? res.data.emotion.document.emotion : null;
+        localStorage.setItem('topSongs', JSON.stringify(topSentiments));
+        console.log("finihied being emotional");
+        setShowingEmotions(true);
+        console.log("is it showing it tho ? ",showingEmotions);
+        console.log('current sentiments ',topSentiments);
+        setjoy(topSentiments.joy);
+        setanger(topSentiments.anger);
+        setdisgust(topSentiments.disgust);
+        setfear(topSentiments.fear);
+        setsadness(topSentiments.sadness);
       });
     } catch (err) {
       console.log(err);
-      return null;
+      topSentiments = null;
+      localStorage.setItem('topSongs', JSON.stringify(topSentiments));
     }
   }
+
+  const mapEmotionToColor = emotion => {
+    switch(emotion){
+        case 'sadness': return '#5c9bff';
+        case 'joy': return '#d7d964'
+        case 'fear': return '#a675bf';
+        case 'disgust': return '#7dad82'
+        case 'anger': return '#c76a65';
+        default: return 'white';
+    }
+}
+
+  const displayEmotions = showingEmotions ? (console.log('showing emotion chart'), Object.keys(topSentiments).map(emotion => {
+      const colour = mapEmotionToColor(emotion);
+      console.log('dealt with colour -> ',colour);
+      return <div key={emotion} className="sentimentBlocks" style={{'background-color': colour}}><div className="innerBlocks">{emotion} <br/> {topSentiments[emotion]*100+"%"}</div></div>
+  })) : (console.log('Failed at having any emotions on the chart'),null)
 
   return (
     <Router>
@@ -96,13 +134,12 @@ function App() {
         <Spotify getTopSongs={topSongsHandler} />
         <div className="container">
           <Switch>
-          <Route exact path="/">{<Home />}</Route>
+            <Route exact path="/">{<Home />}</Route>
             <Route exact path="/lyrics">{<LyricsAPI />}</Route>
             <Route exact path="/sentiments">{<SentimentApi />}</Route>
             <Route exact path="/recommendations">{<TastediveApi />}</Route>
           </Switch>
-          <button onClick={() => console.log(topSongs)}>get top songs</button>
-          <button onClick={() => console.log(topSentiments)}>get data</button>
+          {displayEmotions}
         </div>
       </React.Fragment>
     </Router>
