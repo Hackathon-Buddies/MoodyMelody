@@ -1,0 +1,53 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DotGothic16&display=swap');
+
+ul li::before {
+    content: "";
+    background-size: cover;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    position: relative;
+    top: 0.1rem;
+    margin-right: 0.8rem;
+  
+  }
+
+  ul {
+    list-style-type: none;
+    font-family: 'DotGothic16', sans-serif;
+    font-size: 30px;
+    font-weight: bold;  
+
+        background: linear-gradient(114deg, #160100, #0915be, #3f04a7);
+      background-size: 800% 800%;
+  
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      -webkit-animation: AnimationName 4s ease infinite;
+      -moz-animation: AnimationName 4s ease infinite;
+      animation: AnimationName 4s ease infinite;
+  }
+
+    img.playGif{
+      background-size: cover;
+      display: inline-block;
+      width: 100px;
+      height: 100px;
+    }
+ 
+  @-webkit-keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+  @-moz-keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
+  @keyframes AnimationName {
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+  }
