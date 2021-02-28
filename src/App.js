@@ -10,14 +10,10 @@ import LyricsAPI from './Components/LyricsApi/lyricsApi'
 
 function App() {
   let topSongs = []
-  const topSongsHandler = songList => topSongs = songList;
-
-  useEffect(() => {
-    if (Array.isArray(topSongs) && topSongs.length > 0){
-      localStorage.setItem('topSongs', JSON.stringify(topSongs));
-    }
-  }, [topSongs])
-
+  const topSongsHandler = songList => {
+    topSongs = songList;
+    localStorage.setItem('topSongs', JSON.stringify(songList));
+  }
   return (
     <Router>
       <React.Fragment>
