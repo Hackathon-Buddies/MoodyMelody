@@ -29,8 +29,8 @@ function Spotify({ getTopSongs }) {
  
 
             {token ?
-                <div className='logout' onClick={() => logout()}> Logout </div> :
-                <div className='spotifyBtn'>
+                <div className='logout topRight' onClick={() => logout()}> Logout </div> :
+                <div className='spotifyBtn topRight' >
                     <SpotifyAuth className="actualSpotifyButton"
                         redirectUri={'http://localhost:3000/callback'}
                         clientID='034065fb71374a449d0d58404edb28c0'
