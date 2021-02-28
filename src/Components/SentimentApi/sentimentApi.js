@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, {useState} from 'react';
+import './Sentiment.css'
 
 function SentimentApi() {
     const [sentimentalText, setSentimentalText] = useState('');
@@ -41,21 +42,20 @@ function SentimentApi() {
         })
     }
 
-    // const mapEmotionToColor = emotion => {
-    //     switch(emotion){
-    //         case 'sadness': return 'gray';
-    //         case 'joy': return 'yellow'
-    //         case 'fear': return 'purple';
-    //         case 'disgust': return 'green'
-    //         case 'anger': return 'blue';
-    //         default: return 'white';
-    //     }
-    // }
+    const mapEmotionToColor = emotion => {
+        switch(emotion){
+            case 'sadness': return '#5c9bff';
+            case 'joy': return '#d7d964'
+            case 'fear': return '#a675bf';
+            case 'disgust': return '#7dad82'
+            case 'anger': return '#c76a65';
+            default: return 'white';
+        }
+    }
 
     const displayEmotions = emotions ? Object.keys(emotions).map(emotion => {
-        // const colour = mapEmotionToColor(emotion);
-        // style={{'background-color': colour}}
-        return <div key={emotion}>{emotion} -- {emotions[emotion]}</div>
+        const colour = mapEmotionToColor(emotion);
+        return <div key={emotion} className="sentimentBlocks" style={{'background-color': colour}}><div className="innerBlocks">{emotion} <br/> {emotions[emotion]*100+"%"}</div></div>
     }) : null
 
     return (
