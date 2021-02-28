@@ -6,7 +6,6 @@ const LyricsApi = (props) => {
     const [song, setSong] = useState('');
     const [lyrics, setLyrics] = useState('');
     
-
     const onSearch = () => {
         const lyricsNotFound = setTimeout(() => {
             const songText = song === '' ? '- No song was given' : 'for ' + song;
@@ -20,16 +19,28 @@ const LyricsApi = (props) => {
         });
     }
 
+
+    let lyricsList = []
+    let i = 0;
+
+
     const searchList = async () => {
         const songs = JSON.parse(localStorage.getItem("topSongs"));
-        const allLyrics = songs.map(song => {
-            const lyric = axios.get(`https://api.lyrics.ovh/v1/${artist}/${song}`)
-                .then(res => res)
-                .catch(err => err)
-            return lyric;
+        console.log(songs)
+        const t = songs[i].title;
+        const a = songs[i].artist
+        axios({url: `https://thingproxy.freeboard.io/fetch/https://api.lyrics.ovh/v1/${a}/${t}`, method:'GET'}).catch((err) => console.log(err)).then(s => {
+                console.log("this is the res ", s);
+                lyricsList.push(s);
+                console.log("list so far ", lyricsList);
+            if (i < 19) {
+                i++;
+                searchList();
+            }
+
+
         })
-        const result = await Promise.all(allLyrics);
-        return result;
+
     }
 
     return (
@@ -62,7 +73,7 @@ const LyricsApi = (props) => {
                 />
             </div>
 
-            <button className="btn btn-primary btn-lg btn-block mb-5" onClick={() =>onSearch(song, artist)}>
+            <button className="btn btn-primary btn-lg btn-block mb-5" onClick={() => onSearch(song, artist)}>
                 Get Track Lyrics
             </button>
             <textarea disabled value={lyrics} cols="30" rows="10"></textarea>
